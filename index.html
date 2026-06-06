@@ -94,6 +94,25 @@
   footer{border-top:1px solid var(--line);margin-top:30px;padding:34px 0 60px;color:var(--ink-faint)}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;font-weight:600;letter-spacing:.04em}
 
+  /* per-post note field (light section) */
+  .post-note{width:100%;max-width:600px;margin-top:10px;padding:9px 13px;border:1px solid var(--line);border-radius:9px;font-family:inherit;font-size:14px;color:var(--ink);background:var(--paper2)}
+  .post-note::placeholder{color:var(--ink-faint)}
+  .post-note:focus{outline:none;border-color:var(--maroon);box-shadow:0 0 0 3px rgba(109,31,44,.10)}
+  /* feedback controls (maroon section) */
+  .verdict-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .verdict{font-family:inherit;font-weight:700;font-size:15px;color:#fff;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.30);border-radius:999px;padding:13px 22px;cursor:pointer;transition:all .15s}
+  .verdict:hover{background:rgba(255,255,255,.18)}
+  .verdict.on{background:#fff;color:var(--maroon);border-color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.18)}
+  .fb-comments{width:100%;margin-top:16px;padding:13px 15px;border-radius:12px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-family:inherit;font-size:16px;line-height:1.5;resize:vertical}
+  .fb-comments::placeholder{color:#e9d2c7}
+  .fb-comments:focus{outline:none;border-color:#fff}
+  .fb-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;align-items:center}
+  .fb-send{font-family:inherit;font-weight:800;font-size:16px;color:var(--maroon);background:#fff;border:none;border-radius:999px;padding:15px 28px;cursor:pointer}
+  .fb-send:hover{background:#f3e7df}
+  .fb-copy{font-family:inherit;font-weight:700;font-size:14px;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:13px 20px;cursor:pointer}
+  .fb-copy:hover{background:rgba(255,255,255,.10)}
+  .fb-status{margin-top:14px;font-size:14px;color:#f7ece6;min-height:18px}
+
   @media (max-width:680px){ .hero h1{font-size:38px} .reel video{width:270px;height:480px} }
 </style>
 </head>
@@ -120,22 +139,27 @@
     <div class="post">
       <div class="lab"><span class="day">Monday</span><span class="plat li">LinkedIn</span><span class="ptype">Article post</span><span class="angle">“One migration path, not five vendors”</span></div>
       <img src="assets/posts/01-monday-linkedin.png" alt="Monday LinkedIn post" />
+      <input class="post-note" data-label="Monday · LinkedIn" placeholder="Add a note on this post (optional)" />
     </div>
     <div class="post">
       <div class="lab"><span class="day">Tuesday</span><span class="plat fb">Facebook</span><span class="ptype">Article post</span><span class="angle">“Unified, not stitched together”</span></div>
       <img src="assets/posts/02-tuesday-facebook.png" alt="Tuesday Facebook post" />
+      <input class="post-note" data-label="Tuesday · Facebook" placeholder="Add a note on this post (optional)" />
     </div>
     <div class="post">
       <div class="lab"><span class="day">Wednesday</span><span class="plat li">LinkedIn</span><span class="ptype">Article post</span><span class="angle">“Alora joins the suite”</span></div>
       <img src="assets/posts/03-wednesday-linkedin.png" alt="Wednesday LinkedIn post" />
+      <input class="post-note" data-label="Wednesday · LinkedIn" placeholder="Add a note on this post (optional)" />
     </div>
     <div class="post">
       <div class="lab"><span class="day">Thursday</span><span class="plat fb">Facebook</span><span class="ptype">Article post</span><span class="angle">“Months, not years”</span></div>
       <img src="assets/posts/04-thursday-facebook.png" alt="Thursday Facebook post" />
+      <input class="post-note" data-label="Thursday · Facebook" placeholder="Add a note on this post (optional)" />
     </div>
     <div class="post">
       <div class="lab"><span class="day">Friday</span><span class="plat both">LinkedIn + Facebook</span><span class="ptype">Subscribe CTA</span><span class="angle">“Care-at-home news, without the noise”</span></div>
       <img src="assets/posts/05-friday-linkedin.png" alt="Friday subscribe CTA post" />
+      <input class="post-note" data-label="Friday · LinkedIn + Facebook" placeholder="Add a note on this post (optional)" />
     </div>
   </div></div>
 
@@ -182,14 +206,26 @@
   <section class="feedback"><div class="wrap" style="padding:0">
     <div class="sec-k">Over to you</div>
     <h2 class="serif">What do you think?</h2>
-    <p>This is the whole point of the pilot — to get it sounding and looking exactly like The Rowan Report before anything goes live. Nothing here is locked. Tell us what to tune:</p>
+    <p>This is the whole point of the pilot — to get it sounding exactly like The Rowan Report before anything goes live. Add a note on any post above, then give your overall verdict here. One tap sends it straight to us.</p>
     <div class="asks">
-      <div class="ask"><b>The voice</b><span>Does it read like you? Too much, too little?</span></div>
-      <div class="ask"><b>The cadence</b><span>Five a week feel right? More, fewer, different days?</span></div>
-      <div class="ask"><b>The formats</b><span>Posts, carousel, reel, cards — which are worth doing?</span></div>
-      <div class="ask"><b>Anything off</b><span>A fact, a headline, a hashtag — flag it and it’s fixed.</span></div>
+      <div class="ask"><b>The voice</b><span>Does it read like you?</span></div>
+      <div class="ask"><b>The cadence</b><span>Five a week feel right?</span></div>
+      <div class="ask"><b>The formats</b><span>Posts, carousel, reel, cards — which?</span></div>
+      <div class="ask"><b>Anything off</b><span>A fact, headline, hashtag — flag it.</span></div>
     </div>
-    <div class="close">Reply with anything you’d change. Once you’re happy, we start posting on your schedule — and you approve every single post first.</div>
+
+    <div class="verdict-row">
+      <button type="button" class="verdict" data-v="Approved — go ahead and start posting these">✓ Approve the week</button>
+      <button type="button" class="verdict" data-v="Approve with a few tweaks (see my notes)">✎ Approve with tweaks</button>
+      <button type="button" class="verdict" data-v="Let’s talk before anything goes live">Let’s talk first</button>
+    </div>
+    <textarea id="fb-comments" class="fb-comments" rows="4" placeholder="Overall notes — voice, cadence, which formats to run, anything you’d change (optional)"></textarea>
+    <div class="fb-actions">
+      <button type="button" id="fb-send" class="fb-send">Send my feedback →</button>
+      <button type="button" id="fb-copy" class="fb-copy">Copy it instead</button>
+    </div>
+    <div id="fb-status" class="fb-status"></div>
+    <div class="close">Tap a verdict, add any notes, and Send opens a ready-to-go email to us. Once you’re happy, we post on your schedule — and you approve every single post first.</div>
   </div></section>
 
   <footer><div class="wrap">
@@ -197,5 +233,55 @@
     <div>The Rowan Report — Social Pilot · First Look</div>
   </div></footer>
 
+  <script>
+  (function(){
+    var RECIPIENT = "bpiard@gmail.com";
+    var PREFIX = "The Rowan Report — First Look";
+    var chosen = "";
+    var vbtns = document.querySelectorAll(".verdict");
+    vbtns.forEach(function(b){
+      b.addEventListener("click", function(){
+        vbtns.forEach(function(x){ x.classList.remove("on"); });
+        b.classList.add("on");
+        chosen = b.getAttribute("data-v");
+      });
+    });
+    function assemble(){
+      var lines = ["Verdict: " + (chosen || "(none selected yet)")];
+      var comments = (document.getElementById("fb-comments").value || "").trim();
+      if (comments) lines.push("", "Overall notes:", comments);
+      var notes = [];
+      document.querySelectorAll(".post-note").forEach(function(inp){
+        var v = (inp.value || "").trim();
+        if (v) notes.push("• " + inp.getAttribute("data-label") + ": " + v);
+      });
+      if (notes.length){ lines.push("", "Notes on specific posts:"); lines = lines.concat(notes); }
+      lines.push("", "— sent from the First Look page");
+      return lines.join("\n");
+    }
+    function subject(){
+      var tag = chosen ? (" — " + chosen.split(" —")[0].split(" (")[0]) : "";
+      return PREFIX + tag;
+    }
+    function setStatus(m){ document.getElementById("fb-status").textContent = m; }
+    document.getElementById("fb-send").addEventListener("click", function(){
+      window.location.href = "mailto:" + RECIPIENT + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(assemble());
+      setStatus("Opening your email… if nothing pops up, tap “Copy it instead” and send it to " + RECIPIENT + ".");
+    });
+    document.getElementById("fb-copy").addEventListener("click", function(){
+      var text = subject() + "\n\n" + assemble();
+      function done(){ setStatus("Copied — paste it into an email to " + RECIPIENT + "."); }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+    function fallback(text, done){
+      var ta = document.createElement("textarea"); ta.value = text;
+      ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.focus(); ta.select();
+      try { document.execCommand("copy"); done(); } catch(e){ setStatus("Couldn’t auto-copy — email us at " + RECIPIENT + "."); }
+      document.body.removeChild(ta);
+    }
+  })();
+  </script>
 </body>
 </html>
