@@ -225,7 +225,7 @@
       <button type="button" id="fb-copy" class="fb-copy">Copy it instead</button>
     </div>
     <div id="fb-status" class="fb-status"></div>
-    <div class="close">Tap a verdict, add any notes, and Send opens a ready-to-go email to us. Once you’re happy, we post on your schedule — and you approve every single post first.</div>
+    <div class="close">Tap a verdict, add any notes, and hit Send — it comes straight to us, no email app needed. Once you’re happy, we post on your schedule, and you approve every single post first.</div>
   </div></section>
 
   <footer><div class="wrap">
@@ -235,7 +235,8 @@
 
   <script>
   (function(){
-    var RECIPIENT = "bpiard@gmail.com";
+    var RECIPIENT = "bryan@perseidechocreations.com";
+    var ENDPOINT = "https://formsubmit.co/ajax/" + RECIPIENT;
     var PREFIX = "The Rowan Report — First Look";
     var chosen = "";
     var vbtns = document.querySelectorAll(".verdict");
@@ -246,39 +247,76 @@
         chosen = b.getAttribute("data-v");
       });
     });
-    function assemble(){
-      var lines = ["Verdict: " + (chosen || "(none selected yet)")];
-      var comments = (document.getElementById("fb-comments").value || "").trim();
-      if (comments) lines.push("", "Overall notes:", comments);
-      var notes = [];
+    function postNotes(){
+      var notes = {};
       document.querySelectorAll(".post-note").forEach(function(inp){
         var v = (inp.value || "").trim();
-        if (v) notes.push("• " + inp.getAttribute("data-label") + ": " + v);
+        if (v) notes[inp.getAttribute("data-label")] = v;
       });
-      if (notes.length){ lines.push("", "Notes on specific posts:"); lines = lines.concat(notes); }
-      lines.push("", "— sent from the First Look page");
-      return lines.join("\n");
+      return notes;
     }
     function subject(){
       var tag = chosen ? (" — " + chosen.split(" —")[0].split(" (")[0]) : "";
       return PREFIX + tag;
     }
-    function setStatus(m){ document.getElementById("fb-status").textContent = m; }
-    document.getElementById("fb-send").addEventListener("click", function(){
-      window.location.href = "mailto:" + RECIPIENT + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(assemble());
-      setStatus("Opening your email… if nothing pops up, tap “Copy it instead” and send it to " + RECIPIENT + ".");
+    function assembleText(){
+      var lines = ["Verdict: " + (chosen || "(none selected yet)")];
+      var comments = (document.getElementById("fb-comments").value || "").trim();
+      if (comments) lines.push("", "Overall notes:", comments);
+      var notes = postNotes(), keys = Object.keys(notes);
+      if (keys.length){ lines.push("", "Notes on specific posts:"); keys.forEach(function(k){ lines.push("• " + k + ": " + notes[k]); }); }
+      lines.push("", "— from the First Look page");
+      return lines.join("\n");
+    }
+    function setStatus(m, tone){
+      var s = document.getElementById("fb-status");
+      s.textContent = m;
+      s.style.color = tone === "ok" ? "#dff5e6" : (tone === "warn" ? "#ffd9c9" : "#f7ece6");
+    }
+    function mailtoFallback(){
+      window.location.href = "mailto:" + RECIPIENT + "?subject=" + encodeURIComponent(subject()) + "&body=" + encodeURIComponent(assembleText());
+    }
+    var sendBtn = document.getElementById("fb-send");
+    sendBtn.addEventListener("click", function(){
+      var payload = {
+        _subject: subject(),
+        _template: "table",
+        _captcha: "false",
+        Verdict: chosen || "(none selected)",
+        "Overall notes": (document.getElementById("fb-comments").value || "").trim() || "(none)"
+      };
+      var notes = postNotes();
+      Object.keys(notes).forEach(function(k){ payload["Post — " + k] = notes[k]; });
+      sendBtn.disabled = true;
+      setStatus("Sending…");
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(payload)
+      }).then(function(r){ return r.json().catch(function(){ return {}; }); })
+        .then(function(j){
+          if (j && (j.success === "true" || j.success === true)) {
+            setStatus("✓ Sent — thank you! We’ll get right on it.", "ok");
+            sendBtn.textContent = "Sent ✓";
+          } else { throw new Error((j && j.message) || "submit_failed"); }
+        })
+        .catch(function(){
+          setStatus("Couldn’t send just now — opening your email as a backup.", "warn");
+          sendBtn.disabled = false;
+          mailtoFallback();
+        });
     });
     document.getElementById("fb-copy").addEventListener("click", function(){
-      var text = subject() + "\n\n" + assemble();
-      function done(){ setStatus("Copied — paste it into an email to " + RECIPIENT + "."); }
+      var text = subject() + "\n\n" + assembleText();
+      function done(){ setStatus("Copied — paste it into an email to " + RECIPIENT + ".", "ok"); }
       if (navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
-      } else { fallback(text, done); }
+        navigator.clipboard.writeText(text).then(done, function(){ legacyCopy(text, done); });
+      } else { legacyCopy(text, done); }
     });
-    function fallback(text, done){
+    function legacyCopy(text, done){
       var ta = document.createElement("textarea"); ta.value = text;
       ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.focus(); ta.select();
-      try { document.execCommand("copy"); done(); } catch(e){ setStatus("Couldn’t auto-copy — email us at " + RECIPIENT + "."); }
+      try { document.execCommand("copy"); done(); } catch(e){ setStatus("Couldn’t auto-copy — email us at " + RECIPIENT + ".", "warn"); }
       document.body.removeChild(ta);
     }
   })();
