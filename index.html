@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<meta name="referrer" content="no-referrer" />
+<title>The Rowan Report — First Look</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --maroon:#6d1f2c; --maroon-deep:#511620; --ink:#22201f; --ink-soft:#57514c;
+    --ink-faint:#8a8079; --paper:#f4efe7; --paper2:#ffffff; --line:#e3d9c9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:'Open Sans',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.6}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px}
+  .serif{font-family:'Source Serif 4',Georgia,serif}
+
+  .topbar{border-bottom:1px solid var(--line);background:var(--paper2)}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:58px}
+  .tb-l{font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft)}
+  .tb-l b{color:var(--maroon)}
+  .tb-r{font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint)}
+
+  .hero{padding:74px 0 26px}
+  .kicker{display:inline-flex;align-items:center;gap:11px;font-weight:700;font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--maroon);margin-bottom:22px}
+  .kicker::before{content:"";width:30px;height:2px;background:var(--maroon);display:inline-block}
+  .hero h1{font-size:60px;line-height:1.04;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+  .hero .lede{margin-top:24px;font-size:21px;line-height:1.62;color:var(--ink-soft);max-width:780px}
+  .hero .lede b{color:var(--ink);font-weight:700}
+  .note{margin-top:26px;display:inline-block;background:#f6ece3;border:1px solid #e7d3c1;color:#8a5a2b;
+    font-size:14px;font-weight:600;padding:10px 16px;border-radius:10px}
+
+  .sec{padding:56px 0 8px}
+  .sec-k{font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--maroon)}
+  .sec h2{font-size:34px;font-weight:600;letter-spacing:-.015em;margin-top:8px;color:var(--ink)}
+  .sec p.sub{margin-top:12px;font-size:18px;color:var(--ink-soft);max-width:760px}
+
+  /* feed */
+  .feed{display:flex;flex-direction:column;align-items:center;gap:34px;margin-top:34px}
+  .post{width:100%;max-width:600px}
+  .post .lab{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .day{font-weight:800;font-size:15px;color:var(--ink)}
+  .plat{font-weight:700;font-size:12px;letter-spacing:.04em;color:#fff;padding:4px 12px;border-radius:999px}
+  .plat.li{background:#0a66c2}.plat.fb{background:#1877f2}.plat.both{background:linear-gradient(90deg,#0a66c2,#1877f2)}
+  .ptype{font-size:13px;color:var(--ink-faint);font-weight:600}
+  .angle{margin-left:auto;font-style:italic;color:var(--maroon);font-weight:600;font-size:14px;font-family:'Source Serif 4',serif}
+  .post img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:14px;
+    box-shadow:0 18px 44px rgba(34,32,31,.10)}
+
+  /* carousel strip */
+  .strip{display:flex;gap:18px;overflow-x:auto;padding:34px 4px 22px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+  .strip::-webkit-scrollbar{height:9px}
+  .strip::-webkit-scrollbar-thumb{background:#d7c9b4;border-radius:99px}
+  .slide{flex:0 0 auto;width:300px;scroll-snap-align:center}
+  .slide img{width:300px;height:auto;display:block;border:1px solid var(--line);border-radius:12px;
+    box-shadow:0 14px 34px rgba(34,32,31,.12)}
+  .slide .n{margin-top:8px;text-align:center;font-size:12px;font-weight:700;color:var(--ink-faint);letter-spacing:.1em}
+  .swipehint{font-size:14px;color:var(--ink-faint);font-weight:600;margin-top:4px}
+
+  /* reel + cards */
+  .center-row{display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start;margin-top:34px}
+  .reel{flex:0 0 auto}
+  .reel video{width:316px;height:562px;border-radius:16px;background:#fff;border:1px solid var(--line);
+    box-shadow:0 18px 44px rgba(34,32,31,.14);display:block}
+  .reel .cap{margin-top:12px;font-size:14px;color:var(--ink-faint);font-weight:600;text-align:center}
+  .reel-copy{flex:1 1 300px;min-width:260px;padding-top:6px}
+  .reel-copy h3{font-size:24px;font-weight:700;color:var(--ink);margin-bottom:10px}
+  .reel-copy p{font-size:17px;color:var(--ink-soft);line-height:1.6}
+
+  .cards{display:flex;gap:26px;flex-wrap:wrap;margin-top:34px}
+  .qcard{flex:1 1 300px;max-width:420px}
+  .qcard img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid var(--line);
+    box-shadow:0 14px 34px rgba(34,32,31,.10)}
+  .qcard .cap{margin-top:12px;font-size:14px;color:var(--ink-faint);font-weight:600}
+
+  /* feedback */
+  .feedback{margin:66px 0 20px;background:linear-gradient(180deg,#6d1f2c,#4c1019);color:#f7ece6;
+    border-radius:22px;padding:54px}
+  .feedback .sec-k{color:#e7b9a0}
+  .feedback h2{color:#fff;font-size:38px;font-weight:600;letter-spacing:-.015em;margin-top:8px}
+  .feedback p{margin-top:18px;font-size:19px;line-height:1.6;color:#f0dcd2;max-width:800px}
+  .asks{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+  .ask{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:14px 18px;flex:1 1 200px}
+  .ask b{display:block;font-size:15px;color:#fff;margin-bottom:3px}
+  .ask span{font-size:14px;color:#e9d2c7}
+  .feedback .close{margin-top:30px;font-size:18px;color:#fff;font-weight:600}
+
+  footer{border-top:1px solid var(--line);margin-top:30px;padding:34px 0 60px;color:var(--ink-faint)}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:13px;font-weight:600;letter-spacing:.04em}
+
+  @media (max-width:680px){ .hero h1{font-size:38px} .reel video{width:270px;height:480px} }
+</style>
+</head>
+<body>
+
+  <div class="topbar"><div class="wrap">
+    <div class="tb-l">Prepared by <b>Perseid Echo Creations</b></div>
+    <div class="tb-r">For The Rowan Report</div>
+  </div></div>
+
+  <header class="hero"><div class="wrap">
+    <div class="kicker">First Look</div>
+    <h1 class="serif">Your first week,<br/>ready to go.</h1>
+    <p class="lede">Kristin — we took your latest story, <b>“LivTech acquires Alora,”</b> and turned it into a full week of ready-to-post social for The Rowan Report — plus a carousel, a reel, and a couple of news cards from the same article. Every piece is built on your own masthead and voice. <b>Nothing has been posted.</b> This is yours to react to first.</p>
+    <div class="note">Mockups only — nothing is live. You approve every post before anything goes out.</div>
+  </div></header>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-k">This week · 5 posts</div>
+    <h2 class="serif">A week of posts, in your voice.</h2>
+    <p class="sub">Industry-insider summary, why it matters to agencies, and the link back to your article — straight, credible, never hypey. Here’s how the week would read in the feed.</p>
+  </div></section>
+  <div class="wrap"><div class="feed">
+    <div class="post">
+      <div class="lab"><span class="day">Monday</span><span class="plat li">LinkedIn</span><span class="ptype">Article post</span><span class="angle">“One migration path, not five vendors”</span></div>
+      <img src="assets/posts/01-monday-linkedin.png" alt="Monday LinkedIn post" />
+    </div>
+    <div class="post">
+      <div class="lab"><span class="day">Tuesday</span><span class="plat fb">Facebook</span><span class="ptype">Article post</span><span class="angle">“Unified, not stitched together”</span></div>
+      <img src="assets/posts/02-tuesday-facebook.png" alt="Tuesday Facebook post" />
+    </div>
+    <div class="post">
+      <div class="lab"><span class="day">Wednesday</span><span class="plat li">LinkedIn</span><span class="ptype">Article post</span><span class="angle">“Alora joins the suite”</span></div>
+      <img src="assets/posts/03-wednesday-linkedin.png" alt="Wednesday LinkedIn post" />
+    </div>
+    <div class="post">
+      <div class="lab"><span class="day">Thursday</span><span class="plat fb">Facebook</span><span class="ptype">Article post</span><span class="angle">“Months, not years”</span></div>
+      <img src="assets/posts/04-thursday-facebook.png" alt="Thursday Facebook post" />
+    </div>
+    <div class="post">
+      <div class="lab"><span class="day">Friday</span><span class="plat both">LinkedIn + Facebook</span><span class="ptype">Subscribe CTA</span><span class="angle">“Care-at-home news, without the noise”</span></div>
+      <img src="assets/posts/05-friday-linkedin.png" alt="Friday subscribe CTA post" />
+    </div>
+  </div></div>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-k">Carousel · 7 slides</div>
+    <h2 class="serif">The story, swipe by swipe.</h2>
+    <p class="sub">The same news as a scroll-stopping carousel for LinkedIn and Instagram — hook, the deal, the pattern, and a subscribe close. Swipe through.</p>
+  </div></section>
+  <div class="wrap"><div class="strip">
+    <div class="slide"><img src="assets/carousel/s1.png" alt="Slide 1"/><div class="n">01 · HOOK</div></div>
+    <div class="slide"><img src="assets/carousel/s2.png" alt="Slide 2"/><div class="n">02 · THE DEAL</div></div>
+    <div class="slide"><img src="assets/carousel/s3.png" alt="Slide 3"/><div class="n">03 · THE LINE-UP</div></div>
+    <div class="slide"><img src="assets/carousel/s4.png" alt="Slide 4"/><div class="n">04 · THE SUITE</div></div>
+    <div class="slide"><img src="assets/carousel/s5.png" alt="Slide 5"/><div class="n">05 · THE QUOTE</div></div>
+    <div class="slide"><img src="assets/carousel/s6.png" alt="Slide 6"/><div class="n">06 · WHY IT MATTERS</div></div>
+    <div class="slide"><img src="assets/carousel/s7.png" alt="Slide 7"/><div class="n">07 · SUBSCRIBE</div></div>
+  </div><div class="wrap" style="padding:0"><div class="swipehint">← scroll / swipe to see all 7 →</div></div></div>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-k">Reel · 15 seconds</div>
+    <h2 class="serif">And a short reel.</h2>
+  </div></section>
+  <div class="wrap"><div class="center-row">
+    <div class="reel">
+      <video src="assets/video/reel-vertical.mp4" poster="assets/video/reel-poster.jpg" controls preload="metadata" playsinline></video>
+      <div class="cap">Tap to play · 9:16 for Reels / Stories</div>
+    </div>
+    <div class="reel-copy">
+      <h3>Same story, in motion.</h3>
+      <p>A 15-second vertical cut built from the same article and the same masthead — for Reels and Stories, where short video travels furthest. Sound is a soft bed; it reads fine on mute.</p>
+    </div>
+  </div></div>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-k">Cards · single image</div>
+    <h2 class="serif">Quick-hit news cards.</h2>
+    <p class="sub">For when a story just needs a sharp headline and a link — two takes on the same news.</p>
+  </div></section>
+  <div class="wrap"><div class="cards">
+    <div class="qcard"><img src="assets/cards/card-deal.png" alt="News card — the deal" /><div class="cap">“The deal” — straight news framing</div></div>
+    <div class="qcard"><img src="assets/cards/card-trend.png" alt="News card — the trend" /><div class="cap">“The trend” — consolidation angle</div></div>
+  </div></div>
+
+  <section class="feedback"><div class="wrap" style="padding:0">
+    <div class="sec-k">Over to you</div>
+    <h2 class="serif">What do you think?</h2>
+    <p>This is the whole point of the pilot — to get it sounding and looking exactly like The Rowan Report before anything goes live. Nothing here is locked. Tell us what to tune:</p>
+    <div class="asks">
+      <div class="ask"><b>The voice</b><span>Does it read like you? Too much, too little?</span></div>
+      <div class="ask"><b>The cadence</b><span>Five a week feel right? More, fewer, different days?</span></div>
+      <div class="ask"><b>The formats</b><span>Posts, carousel, reel, cards — which are worth doing?</span></div>
+      <div class="ask"><b>Anything off</b><span>A fact, a headline, a hashtag — flag it and it’s fixed.</span></div>
+    </div>
+    <div class="close">Reply with anything you’d change. Once you’re happy, we start posting on your schedule — and you approve every single post first.</div>
+  </div></section>
+
+  <footer><div class="wrap">
+    <div>Prepared by Perseid Echo Creations</div>
+    <div>The Rowan Report — Social Pilot · First Look</div>
+  </div></footer>
+
+</body>
+</html>
